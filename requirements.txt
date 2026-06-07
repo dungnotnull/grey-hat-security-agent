@@ -1,0 +1,67 @@
+﻿# grey-hat-security-agent requirements.txt
+# Phase 0 - Pinned dependencies
+# Python 3.11+
+
+# === Core Framework ===
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+typer[all]>=0.12.0
+pydantic>=2.7.0
+pydantic-settings>=2.3.0
+python-dotenv>=1.0.1
+
+# === Async HTTP ===
+aiohttp>=3.9.5
+httpx>=0.27.0
+
+# === Database ===
+sqlalchemy[asyncio]>=2.0.30
+aiosqlite>=0.20.0
+
+# === Cryptography ===
+cryptography>=42.0.5
+
+# === Security Scanning ===
+python-nmap>=0.7.1
+sslyze>=6.0.0
+
+# === LLM Integration ===
+anthropic>=0.27.0
+openai>=1.30.0
+
+# === ML / Transformers ===
+transformers>=4.41.0
+torch>=2.3.0
+sentencepiece>=0.2.0
+
+# === Threat Intelligence ===
+stix2>=3.0.1
+taxii2-client>=2.3.0
+
+# === Web Crawling ===
+crawl4ai>=0.3.0
+
+# === PDF Generation ===
+reportlab>=4.2.0
+jinja2>=3.1.4
+
+# === Data Processing ===
+rich>=13.7.0
+
+# === Docker SDK ===
+docker>=7.0.0
+
+# === Testing ===
+pytest>=8.2.0
+pytest-asyncio>=0.23.0
+pytest-cov>=5.0.0
+
+# === Code Quality ===
+ruff>=0.4.0
+mypy>=1.10.0
+
+# === Scheduling ===
+apscheduler>=3.10.4
+
+# === Rate Limiting ===
+slowapi>=1.0.0

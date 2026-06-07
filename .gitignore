@@ -1,0 +1,66 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.class
+*.so
+*.egg-info/
+dist/
+build/
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+
+# Environment variables (NEVER commit)
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Database (contains encrypted findings)
+data/grey_hat_agent.db
+data/grey_hat_agent.db-journal
+
+# Reports (may contain sensitive findings)
+data/reports/
+
+# Model cache
+data/model_cache/
+
+# Encryption keys
+*.priv
+*.pem
+keys/
+
+# Logs
+*.log
+logs/
+
+# pytest cache
+.pytest_cache/
+
+# mypy cache
+.mypy_cache/
+
+# Coverage reports
+htmlcov/
+.coverage
+coverage.xml
+
+# NVD CVE mirror (large)
+data/cve_mirror/*.json
+data/cve_mirror/*.json.gz
+
+# OS temp files
+*.tmp
+*.bak

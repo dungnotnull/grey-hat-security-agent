@@ -1,0 +1,56 @@
+﻿name: grey-hat-security-agent CI
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install ruff mypy
+          pip install -r requirements.txt
+      - name: Lint with ruff
+        run: ruff check .
+      - name: Type check with mypy
+        run: mypy --ignore-missing-imports core/ models/ api/ cli/ db/ config/ utils/ || true
+
+  test:
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          pip install pytest pytest-asyncio pytest-cov
+      - name: Run tests
+        run: python -m pytest tests/ -v --tb=short
+      - name: Run tests with coverage
+        run: python -m pytest tests/ --cov=core --cov=models --cov=db --cov=config --cov=utils --cov-report=term-missing || true
+
+  security:
+    runs-on: ubuntu-latest
+    needs: test
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Install pip-audit
+        run: pip install pip-audit
+      - name: Security audit
+        run: pip-audit -r requirements.txt || true

@@ -1,0 +1,52 @@
+﻿# grey-hat-security-agent — Docker Compose
+# Run: docker-compose up
+
+version: '3.8'
+
+services:
+  agent:
+    build: .
+    container_name: grey-hat-agent
+    ports:
+      - "8000:8000"
+    environment:
+      - LLM_PROVIDER=ollama
+      - OLLAMA_BASE_URL=http://ollama:11434
+      - ZAP_API_URL=http://zap:8090
+      - DB_PATH=/app/data/grey_hat_agent.db
+    volumes:
+      - agent-data:/app/data
+      - agent-keys:/app/keys
+    depends_on:
+      - ollama
+      - zap
+    networks:
+      - agent-net
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: grey-hat-ollama
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - agent-net
+
+  zap:
+    image: zaproxy/zap-stable
+    container_name: grey-hat-zap
+    command: zap.sh -daemon -host 0.0.0.0 -port 8090 -config api.addrs.addr.name=.* -config api.addrs.addr.regex=true -config api.disablekey=true
+    ports:
+      - "8090:8090"
+    networks:
+      - agent-net
+
+volumes:
+  agent-data:
+  agent-keys:
+  ollama-data:
+
+networks:
+  agent-net:
+    driver: bridge
